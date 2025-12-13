@@ -185,6 +185,8 @@ WITH (
 );
 SELECT COUNT(*) FROM bronze.erp_px_cat_g1v2;
 
+-- FOR COMPLETENESS PLEASE REFER TO THE BELOW CODE 
+
 -----------------------------------------------------------------------------
 --DATA INJECTION AND COMPLETENESS--
 -----------------------------------------------------------------------------
