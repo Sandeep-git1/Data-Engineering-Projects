@@ -188,6 +188,71 @@ SELECT COUNT(*) FROM bronze.erp_px_cat_g1v2;
 -----------------------------------------------------------------------------
 --DATA INJECTION AND COMPLETENESS--
 -----------------------------------------------------------------------------
+/* # Bronze Layer Load Procedure
+
+## Overview
+This stored procedure (`bronze.load_bronze`) is responsible for loading **raw source data** into the **Bronze layer** of the SQL Data Warehouse.  
+The Bronze layer acts as the **landing zone** for source-system data and preserves it **as-is** for traceability and debugging.
+
+---
+## Purpose
+- Perform **full refresh loads** from source CSV files
+- Maintain **idempotent execution** (safe to re-run)
+- Capture **load durations** at both table and batch level
+- Provide **basic operational logging** via `PRINT` statements
+- Support **data lineage** from source → Bronze layer
+
+---
+## Tables Loaded
+
+### CRM Source
+- `bronze.crm_cust_info`
+- `bronze.crm_prd_info`
+- `bronze.crm_sales_details`
+
+### ERP Source
+- `bronze.erp_cust_az12`
+- `bronze.erp_loc_a101`
+- `bronze.erp_px_cat_g1v2`
+
+---
+## Load Strategy
+- Each table is **truncated** before loading
+- Data is ingested using `BULK INSERT`
+- CSV headers are skipped using `FIRSTROW = 2`
+- Loads are **full reloads**, ensuring no duplicate data on re-runs
+
+---
+## Execution Flow
+1. Capture batch start time
+2. Load CRM tables sequentially
+3. Load ERP tables sequentially
+4. Measure and print:
+   - Per-table load duration
+   - Total batch duration
+5. Handle errors using `TRY...CATCH`
+
+---
+## Error Handling
+- Errors are caught using a `TRY...CATCH` block
+- On failure, the procedure prints:
+  - Error message
+  - Error number
+- This allows quick diagnosis during development and testing
+
+---
+## Performance Tracking
+- Table-level load time is captured using `DATEDIFF (millisecond)`
+- Batch-level duration is printed at the end of execution
+- Useful for identifying slow loads or file issues
+
+---
+## How to Run
+
+```sql
+EXEC bronze.load_bronze; 
+THIS SQL CODE SECTION IS BELOW */ 
+
 
 CREATE OR ALTER PROCEDURE bronze.load_bronze
 AS
