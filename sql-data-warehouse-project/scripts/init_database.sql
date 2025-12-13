@@ -124,7 +124,7 @@ from 'C:\project_\Data Engineering\sql-data-warehouse-project\sql-data-warehouse
 with (
  firstrow = 2,
  FIELDTERMINATOR = ',',
- tablock
+ tablock  --Ensures the load is treated as a single, atomic table operation
 );
 
 SELECT COUNT(*) FROM bronze.crm_cust_info;
