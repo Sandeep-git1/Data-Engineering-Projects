@@ -1,0 +1,49 @@
+[
+  {
+    "order_id": 13,
+    "order_date": "2024-01-20",
+    "total_amount": 75.0,
+    "customer": {
+      "customer_id": 110,
+      "name": "Aarav Sharma",
+      "email": "aarav.sharma@example.com",
+      "address": "201 MG Road, Bengaluru"
+    },
+    "products": [
+      {
+        "product_id": "P03",
+        "name": "Laptop Stand",
+        "category": "Electronics",
+        "price": 75.0,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "order_id": 14,
+    "order_date": "2024-01-21",
+    "total_amount": 100.0,
+    "customer": {
+      "customer_id": 101,
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "address": "123 Main St, Springfield"
+    },
+    "products": [
+      {
+        "product_id": "P01",
+        "name": "Wireless Mouse",
+        "category": "Electronics",
+        "price": 25.0,
+        "quantity": 2
+      },
+      {
+        "product_id": "P05",
+        "name": "Desk Organizer",
+        "category": "Furniture",
+        "price": 30.0,
+        "quantity": 1
+      }
+    ]
+  }
+]
