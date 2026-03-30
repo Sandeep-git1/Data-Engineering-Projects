@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: obt
+    description: "Gold OBT - joined Silver tables"
+    config:
+      materialized: table
+      schema: gold
+
+  - name: dim_customer
+    description: "Gold dim_customer - star schema customer dimension"
+    config:
+      materialized: table
+      schema: gold
+    columns:
+      - name: customer_sk
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_product
+    description: "Gold dim_product - star schema product dimension"
+    config:
+      materialized: table
+      schema: gold
+    columns:
+      - name: product_sk
+        tests:
+          - unique
+          - not_null
+
+  - name: fact_sales
+    description: "Gold fact_sales - star schema fact table"
+    config:
+      materialized: table
+      schema: gold
+    columns:
+      - name: sales_sk
+        tests:
+          - unique
+          - not_null
+          
+      - name: order_number
+        tests: 
+          - not_null
+          # Removed 'unique' here because an order can have multiple line items (products)
+          
+      - name: customer_sk
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customer')
+              field: customer_sk
+              
+      - name: product_sk
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_product')
+              field: product_sk
