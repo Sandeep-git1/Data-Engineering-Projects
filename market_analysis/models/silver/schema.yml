@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: crm_cust_info_silver
+    description: "Cleaned CRM customers"
+    config:
+      materialized: incremental
+      unique_key: cst_id
+    columns:
+      - name: cst_id
+        tests: [not_null, unique]
+      - name: cst_key
+        tests: [not_null]
+
+  - name: crm_prd_info_silver
+    description: "Cleaned CRM products" 
+    config:
+      materialized: incremental
+      unique_key: prd_id
+    columns:
+      - name: prd_id
+        tests: [not_null, unique]
+
+  - name: crm_sales_details_silver
+    description: "Cleaned sales line items"
+    config:
+      materialized: incremental
+      unique_key: ['sls_ord_num', 'sls_prd_key']  # Composite PK
+    columns:
+      - name: sls_ord_num
+        tests: [not_null]
+      - name: sls_prd_key
+        tests: [not_null]
+
+  - name: erp_cust_az12_silver
+    description: "ERP customers AZ12"
+    config:
+      materialized: incremental
+      unique_key: cid
+    columns:
+      - name: cid
+        tests: [not_null, unique]
+
+  - name: erp_loc_a101_silver
+    description: "ERP locations A101"
+    config:
+      materialized: incremental
+      unique_key: cid
+    columns:
+      - name: cid
+        tests: [not_null, unique]
+
+  - name: erp_px_cat_g1v2_silver
+    description: "ERP product categories"
+    config:
+      materialized: table  # Full refresh (small)
+    columns:
+      - name: id
+        tests: [not_null, unique]
